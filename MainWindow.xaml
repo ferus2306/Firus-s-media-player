@@ -6,16 +6,20 @@
         xmlns:local="clr-namespace:My_media_player_3"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="842">
-    <Grid RenderTransformOrigin="0.576,0.609" Margin="0,0,2,0">
+    <Grid RenderTransformOrigin="0.576,0.609" Margin="0,0,2,0" Background="#FFC5E7F1">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <TextBlock Name="lblProgressStatus" FontFamily="Segoe UI Semibold" FontSize="24" Margin="463,179,223,203" RenderTransformOrigin="0.467,3.689">00:00:00</TextBlock>
-        <ProgressBar Name="pbVolume" Maximum="1" Value="{Binding ElementName=mediaElement, Path=Volume}" Margin="453,303,223,78" RenderTransformOrigin="0.36,-3.167" />
+        <TextBlock Name="lblProgressStatus" FontFamily="Segoe UI Semibold" FontSize="24" Margin="224,333,462,49" RenderTransformOrigin="0.467,3.689">00:00:00</TextBlock>
+        <ProgressBar Name="pbVolume" Maximum="1" Value="{Binding ElementName=mediaElement, Path=Volume}" Margin="453,320,223,78" RenderTransformOrigin="0.36,-3.167" />
 
-        <Button x:Name="button" Content="Open" HorizontalAlignment="Left" Margin="21,89,0,0" VerticalAlignment="Top" Width="52" Click="Button_Click" Height="20"/>
+        <Button x:Name="button" Content="Open" HorizontalAlignment="Left" Margin="21,89,0,0" VerticalAlignment="Top" Width="52" Click="Button_Click" Height="20">
+            <Button.Effect>
+                <DropShadowEffect/>
+            </Button.Effect>
+        </Button>
 
-        <MediaElement x:Name="mediaElement" HorizontalAlignment="Left" Height="263" Margin="110,71,0,0" VerticalAlignment="Top" LoadedBehavior="Manual" Width="319" RenderTransformOrigin="0.5,0.5">
+        <MediaElement x:Name="mediaElement" HorizontalAlignment="Left" Height="251" Margin="110,83,0,0" VerticalAlignment="Top" LoadedBehavior="Manual" Width="302" RenderTransformOrigin="0.5,0.5">
             <MediaElement.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -26,11 +30,16 @@
             </MediaElement.RenderTransform>
         </MediaElement>
         <Button x:Name="play_button" Content="Play" HorizontalAlignment="Left" Margin="124,46,0,0" VerticalAlignment="Top" Width="60" Height="20" Click="Play_button_Click"/>
-        <Button x:Name="stop_button" Content="Stop" HorizontalAlignment="Left" Margin="296,46,0,0" VerticalAlignment="Top" Width="60" RenderTransformOrigin="-0.373,0.5" Click="Stop_button_Click"/>
-        <Button x:Name="pause_button" Content="Pause" HorizontalAlignment="Left" Margin="210,46,0,0" VerticalAlignment="Top" Width="60" Click="Pause_button_Click" RenderTransformOrigin="0.147,0.6"/>
+        <Button x:Name="stop_button" Content="Stop" HorizontalAlignment="Left" Margin="189,46,0,0" VerticalAlignment="Top" Width="60" RenderTransformOrigin="-0.373,0.5" Click="Stop_button_Click"/>
         <Slider x:Name="sliProgress" Thumb.DragStarted="sliProgress_DragStarted"  Thumb.DragCompleted="sliProgress_DragCompleted" ValueChanged="sliProgress_ValueChanged"  HorizontalAlignment="Left" Margin="114,359,0,0" VerticalAlignment="Top" Width="324" Height="21"/>
-        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="453,122,0,0" VerticalAlignment="Top" Width="120"/>
-        <Button x:Name="text_button" Content="Open Text" HorizontalAlignment="Left" Margin="606,122,0,0" VerticalAlignment="Top" Width="75" Click="Text_button_Click"/>
+        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="440,72,0,0" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="text_button" Content="Open Text with time frames" HorizontalAlignment="Left" Margin="578,74,0,0" VerticalAlignment="Top" Width="160" Click="Text_button_Click" RenderTransformOrigin="-0.653,-3.025"/>
+        <Button x:Name="exit_button" Content="Exit" HorizontalAlignment="Left" Margin="753,31,0,0" VerticalAlignment="Top" Width="45" Click="Button1_Click" AutomationProperties.HelpText="WIll exit the application">
+            <Button.Effect>
+                <DropShadowEffect/>
+            </Button.Effect>
+        </Button>
+        <ListBox x:Name="listBox" HorizontalAlignment="Left" Height="212" Margin="630,129,0,0" VerticalAlignment="Top" Width="140" SelectionChanged="ListBox_SelectionChanged"/>
 
 
 

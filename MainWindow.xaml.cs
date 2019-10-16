@@ -24,6 +24,7 @@ namespace My_media_player_3
     /// </summary>
     public partial class MainWindow : Window
     {
+        string[] fi, pt;
         private bool mediaPlayerIsPlaying = false;
         private bool userIsDraggingSlider = false;
         public MainWindow()
@@ -39,16 +40,8 @@ namespace My_media_player_3
 
         private void timer_Tick(object sender, EventArgs e)
         {
-            //var x = Convert.ToInt32(lblX.Text);
-            //var start = Convert.ToInt32(label3.Content);
-            //var end = Convert.ToInt32(label4.Content);
-            //double start = double.Parse(label3.ToString());
-            //double end = double.Parse(label4.ToString());
-            //if (comboBox.Items.[0] >
             if (comboBox.SelectedValue != null) {
                 var stringValue = comboBox.SelectedValue.ToString();
-                //MessageBox.Show(stringValue);
-                //stringValue.Split('-');
 
                 char[] delimeters = { '-' };
                 string[] words = stringValue.Split(delimeters);
@@ -59,15 +52,9 @@ namespace My_media_player_3
                 int end = Convert.ToInt32(words[1]);
                 //MessageBox.Show(Convert.ToString(end));
 
-                if (Math.Floor(mediaElement.Position.TotalSeconds) == start)
+                if (Math.Floor(mediaElement.Position.TotalSeconds) > start && Math.Floor(mediaElement.Position.TotalSeconds) < end)
                     mediaElement.Position = TimeSpan.FromSeconds(end);
-                    
             }
-
-       
-
-
-
 
             if ((mediaElement.Source != null) && (mediaElement.NaturalDuration.HasTimeSpan) && (!userIsDraggingSlider))
             {
@@ -75,6 +62,8 @@ namespace My_media_player_3
                 sliProgress.Maximum = mediaElement.NaturalDuration.TimeSpan.TotalSeconds;
                 sliProgress.Value = mediaElement.Position.TotalSeconds;
             }
+
+            //if ( mediaElement. == mediaElement.Play()
         }
 
         private void sliProgress_DragStarted(object sender, DragStartedEventArgs e)
@@ -103,10 +92,16 @@ namespace My_media_player_3
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Multiselect = true;
             openFileDialog.Filter = "All Media Files|*.wav;*.aac;*.wma;*.wmv;*.avi;*.mpg;*.mpeg;*.m1v;*.mp2;*.mp3;*.mpa;*.mpe;*.m3u;*.mp4;*.mov;*.3g2;*.3gp2;*.3gp;*.3gpp;*.m4a;*.cda;*.aif;*.aifc;*.aiff;*.mid;*.midi;*.rmi;*.mkv;*.WAV;*.AAC;*.WMA;*.WMV;*.AVI;*.MPG;*.MPEG;*.M1V;*.MP2;*.MP3;*.MPA;*.MPE;*.M3U;*.MP4;*.MOV;*.3G2;*.3GP2;*.3GP;*.3GPP;*.M4A;*.CDA;*.AIF;*.AIFC;*.AIFF;*.MID;*.MIDI;*.RMI;*.MKV";
             if (openFileDialog.ShowDialog() == true)
             {
-                mediaElement.Source = new Uri(openFileDialog.FileName);
+                    fi = openFileDialog.SafeFileNames;
+                    pt = openFileDialog.FileNames;
+                    for (int i = 0; i < fi.Length; i++)
+                    {
+                        listBox.Items.Add(fi[i]);
+                    }
                 MainWindow1.Title = openFileDialog.FileName;
                 mediaElement.Play();
 
@@ -118,20 +113,24 @@ namespace My_media_player_3
             }
         }
 
-
         private void Play_button_Click(object sender, RoutedEventArgs e)
         {
-            mediaElement.Play();
+            if(play_button.Content == "Play")
+            {
+                mediaElement.Play();
+                play_button.Content = "Pause";
+            }
+            else
+            {
+                mediaElement.Pause();
+                play_button.Content = "Play";
+
+            }
         }
 
         private void Stop_button_Click(object sender, RoutedEventArgs e)
         {
             mediaElement.Stop();
-        }
-
-        private void Pause_button_Click(object sender, RoutedEventArgs e)
-        {
-            mediaElement.Pause();
         }
 
         private void Text_button_Click(object sender, RoutedEventArgs e)
@@ -153,5 +152,18 @@ namespace My_media_player_3
                 }
             }
         }
+
+        private void Button1_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var FileName = pt[listBox.SelectedIndex];
+            mediaElement.Source = new Uri(FileName);
+            mediaElement.Play();
+        }
+
     }
 }
